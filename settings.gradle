@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':PosLibs:network', ':PosLibs:thread', ':PosLibs:tools'
