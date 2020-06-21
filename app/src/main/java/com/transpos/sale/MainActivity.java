@@ -27,6 +27,8 @@ import com.transpos.sale.db.Student;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 public class MainActivity extends BaseActivity {
     private static final int REQUEST_CODE_ASK_CALL_PHONE = 100;
     private boolean isdialogshow = false;
@@ -37,7 +39,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         findViewById(R.id.tv_insert).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +47,11 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(BaseApp.getApplication(),"插入"+insert,Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
 
     @Override

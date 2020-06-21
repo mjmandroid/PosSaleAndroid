@@ -27,7 +27,6 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${SUPPORT_V7_VERSION}"
     implementation "com.squareup.okhttp3:okhttp:${OK_HTTP_VERSION}"
     implementation "com.squareup.okhttp3:logging-interceptor:${OK_HTTP_LOG_VERSION}"
-    api "com.google.code.gson:gson:${GSON_VERSION}"
     api project(':PosLibs:thread')
     api project(':PosLibs:tools')
 }

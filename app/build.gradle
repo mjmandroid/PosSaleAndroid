@@ -8,6 +8,7 @@ android {
         targetSdkVersion "${TARGETSDKVERSION}" as int
         versionCode "${VERSIONCODE}" as int
         versionName "${VERSIONNAME}"
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,4 +29,8 @@ dependencies {
     implementation project(':PosLibs:network')
     implementation "android.arch.persistence.room:runtime:$ROOM_VERSION"
     annotationProcessor "android.arch.persistence.room:compiler:$ROOM_VERSION"
+    implementation "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
+    implementation "com.github.bumptech.glide:glide:${GLIDE_VERSION}"
+    implementation "org.apache.commons:commons-lang3:${LANG3_VERSION}"
+
 }

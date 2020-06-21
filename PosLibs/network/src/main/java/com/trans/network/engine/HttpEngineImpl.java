@@ -192,20 +192,24 @@ public class HttpEngineImpl implements IHttpEngine {
         FormBody.Builder builder = new FormBody.Builder();
         for (Map.Entry<String, Object> entry : postParams.entrySet()) {
             builder.add(entry.getKey(), String.valueOf(entry.getValue()));
+            Log.e("OkHttp", entry.getKey()+"--"+String.valueOf(entry.getValue()) );
         }
         return builder;
     }
 
     @Override
     public void postJsonString(String url, Object object, StringCallback callBack) {
+
         MultipartBody.Builder bodyBuilder = new MultipartBody.Builder()
                 .addPart(formBuilder(null).build())
                 .addPart(MultipartBody.create(HttpParams.MEDIA_TYPE_JSON, GsonHelper.toJson(object)));
 
+        RequestBody body = RequestBody.create(HttpParams.MEDIA_TYPE_JSON, GsonHelper.toJson(object));
+
         Request.Builder reqBuilder = new Request.Builder()
                 .url(url)
                 .headers(Headers.of(mCommonHeaders))
-                .post(bodyBuilder.build());
+                .post(body);
         doRequest(reqBuilder.build(), callBack, new OkCallback(callBack));
     }
 
@@ -324,9 +328,9 @@ public class HttpEngineImpl implements IHttpEngine {
         if(mHttpClient == null){
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             if(BuildConfig.DEBUG){
-                logging.setLevel(HttpLoggingInterceptor.Level.NONE);
-            } else {
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            } else {
+                logging.setLevel(HttpLoggingInterceptor.Level.NONE);
             }
             HttpUtils.SSLParams sslParams = HttpUtils.getSslSocketFactory(null, null, null);
             mHttpClient = new OkHttpClient.Builder()

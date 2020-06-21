@@ -3,4 +3,75 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="blue_0">#098DFA</color>
+    <color name="blue_1">#1F93DC</color>
+    <color name="blue_2">#7EBFE7</color>
+    <color name="blue_3">#E7F2F8</color>
+    <color name="blue_4">#1488F4</color>
+    <color name="white_1">#FFFFFF</color>
+    <color name="black_1">#000000</color>
+    <color name="black_2">#8B8F90</color>
+    <color name="black_3">#FF333333</color>
+    <color name="black_4">#FF999999</color>
+    <color name="black_6">#FF666666</color>
+    <color name="black_5">#2c2c2c</color>
+    <color name="read_0">#FF3A31</color>
+    <color name="read_1">#EB5546</color>
+    <color name="read_2">#D92129</color>
+    <color name="read_3">#EE3B3B</color>
+    <color name="green_1">#45CAAF</color>
+    <color name="green_2">#008000</color>
+    <color name="green_3">#00CD00</color>
+    <color name="coffee_1">#D6CAAF</color>
+    <color name="coffee_2">#BBAFA7</color>
+    <color name="gray">#fff2f3f7</color>
+    <color name="gray_0">#F0F0F0</color>
+    <color name="gray_1">#dbdbdb</color>
+    <color name="gray_2">#bfbfbf</color>
+    <color name="gray_3">#F4F3F2</color>
+    <color name="gray_4">#f4f4f4</color>
+    <color name="brown_1">#FFC125</color>
+    <color name="brown_2">#FFD700</color>
+    <color name="orange0">#FF7400</color>
+    <color name="orange1">#FFF8DC</color>
+    <color name="orange2">#FFE7BA</color>
+    <color name="orange3">#FF8B00</color>
+    <color name="orange4">#FFab00</color>
+    <color name="color_category">#E4DED0</color>
+    <color name="cacheColorHint">#00000000</color>
+    <color name="color_write">#FFFFFF</color>
+    <color name="color_blue">#1B82D1</color>
+    <color name="color_red">#FF391D</color>
+    <color name="color_green">#39A89A</color>
+    <color name="color_hint">#716767</color>
+    <color name="color_yellow">#F5B857</color>
+    <color name="color_hint_more">#C3C7BD</color>
+    <color name="bg_color">#FFFFFF</color>
+    <color name="bg_color_list">#F6F6F6</color>
+    <color name="table_head_text_color">#850</color>
+    <color name="table_head_bg_color">#ccc</color>
+    <color name="table_boday_text_color">#011</color>
+    <color name="transparent">#00000000</color>
+    <color name="hint_bg">#ffcccccc</color>
+    <color name="text_title_center">#656565</color>
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="possible_result_points">#c0ffbd21</color>
+    <color name="color_order">#F5DEB3</color>
+    <color name="color_select_order">#FECB6E</color>
+
+    <!-- Android standard ICS color -->
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color>
+
+    <!-- Android standard ICS color -->
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="viewfinder_laser">#ffcc0000</color>
+
+    <!-- Android standard ICS color -->
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="viewfinder_read">#ff0000</color>
 </resources>
