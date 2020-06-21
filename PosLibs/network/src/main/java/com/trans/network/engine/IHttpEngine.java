@@ -41,7 +41,7 @@ public interface IHttpEngine {
 
     void postString(String url, Map<String, Object> params, String tag, StringCallback callBack, Priority priority);
 
-    void postJsonString(String url, Object object, StringCallback callBack);
+    void postJsonString(String url, Map<String, Object> params, StringCallback callBack);
 
     //------------------------------------  2  ----------------------------------------------
 

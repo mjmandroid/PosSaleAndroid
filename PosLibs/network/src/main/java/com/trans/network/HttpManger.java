@@ -92,8 +92,8 @@ public class HttpManger implements IHttpEngine {
 
 
     @Override
-    public void postJsonString(String url, Object object, StringCallback callBack) {
-        httpEngine.postJsonString(url,object,callBack);
+    public void postJsonString(String url, Map<String, Object> params, StringCallback callBack) {
+        httpEngine.postJsonString(url,params,callBack);
     }
 
     @Override

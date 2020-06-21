@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trans.network.callback.StringCallback;
 import com.trans.network.model.Response;
+import com.trans.network.utils.GsonHelper;
 import com.transpos.sale.base.mvp.BasePresenter;
 import com.transpos.sale.entity.OpenResponse;
 import com.transpos.sale.entity.RegistrationCode;
@@ -20,7 +21,7 @@ public class ReginsterPresenter extends BasePresenter<RegisterContract.Model,Reg
         getModule().register(authCode, new StringCallback() {
             @Override
             public void onSuccess(Response<String> response) {
-                OpenResponse<RegistrationCode> result = new Gson().fromJson(response.body(), new TypeToken<OpenResponse<RegistrationCode>>(){}.getType());
+                OpenResponse<RegistrationCode> result = GsonHelper.fromJson(response.body(), new TypeToken<OpenResponse<RegistrationCode>>(){}.getType());
                 getView().registerSuccess(result);
             }
 

@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 
 import com.transpos.sale.R;
 import com.transpos.sale.utils.UiUtils;
+import com.transpos.tools.tputils.TPUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

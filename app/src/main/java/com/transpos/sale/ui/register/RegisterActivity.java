@@ -2,8 +2,10 @@ package com.transpos.sale.ui.register;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.transpos.sale.R;
 import com.transpos.sale.base.BaseActivity;
@@ -24,7 +26,7 @@ public class RegisterActivity extends BaseMvpActivity<ReginsterPresenter> implem
     @Bind(R.id.input_keyboard)
     RegisterKeyboardView mRegisterKeyboardView;
     @Bind(R.id.et_input)
-    EditText mInput;
+    TextView mInput;
 
 
     @Override

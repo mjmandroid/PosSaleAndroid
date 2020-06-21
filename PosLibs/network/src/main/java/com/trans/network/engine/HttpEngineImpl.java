@@ -177,10 +177,12 @@ public class HttpEngineImpl implements IHttpEngine {
 
     @Override
     public void postString(String url, Map<String, Object> params, String tag, StringCallback callBack, Priority priority) {
+        Map<String, Object> postParams = genParams(params);
+        RequestBody body = RequestBody.create(HttpParams.MEDIA_TYPE_JSON, GsonHelper.toJson(postParams));
         Request.Builder reqBuilder = new Request.Builder()
                 .url(url)
                 .headers(Headers.of(mCommonHeaders))
-                .post(formBuilder(params).build());
+                .post(body);
         if (tag != null) {
             reqBuilder.tag(tag);
         }
@@ -198,13 +200,13 @@ public class HttpEngineImpl implements IHttpEngine {
     }
 
     @Override
-    public void postJsonString(String url, Object object, StringCallback callBack) {
+    public void postJsonString(String url, Map<String, Object> params, StringCallback callBack) {
 
-        MultipartBody.Builder bodyBuilder = new MultipartBody.Builder()
-                .addPart(formBuilder(null).build())
-                .addPart(MultipartBody.create(HttpParams.MEDIA_TYPE_JSON, GsonHelper.toJson(object)));
-
-        RequestBody body = RequestBody.create(HttpParams.MEDIA_TYPE_JSON, GsonHelper.toJson(object));
+//        MultipartBody.Builder bodyBuilder = new MultipartBody.Builder()
+//                .addPart(formBuilder(null).build())
+//                .addPart(MultipartBody.create(HttpParams.MEDIA_TYPE_JSON, GsonHelper.toJson(object)));
+        Map<String, Object> postParams = genParams(params);
+        RequestBody body = RequestBody.create(HttpParams.MEDIA_TYPE_JSON, GsonHelper.toJson(postParams));
 
         Request.Builder reqBuilder = new Request.Builder()
                 .url(url)
