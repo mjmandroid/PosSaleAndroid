@@ -216,6 +216,23 @@ public class HttpEngineImpl implements IHttpEngine {
     }
 
     @Override
+    public String postString(String url, Map<String, Object> params) {
+        Map<String, Object> postParams = genParams(params);
+        RequestBody body = RequestBody.create(HttpParams.MEDIA_TYPE_JSON, GsonHelper.toJson(postParams));
+        Request.Builder reqBuilder = new Request.Builder()
+                .url(url)
+                .headers(Headers.of(mCommonHeaders))
+                .post(body);
+        try {
+            Response execute = getHttpClient().newCall(reqBuilder.build()).execute();
+            return execute.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public void getFile(String url, FileCallback callBack) {
         getFile(url,null,callBack);
     }

@@ -8,13 +8,38 @@ import android.arch.persistence.room.migration.Migration;
 import android.os.Environment;
 
 import com.transpos.sale.base.BaseApp;
+import com.transpos.sale.db.dao.PayModeDao;
+import com.transpos.sale.db.dao.ProductBrandDao;
+import com.transpos.sale.db.dao.ProductCategroyDao;
+import com.transpos.sale.db.dao.ProductCodeDao;
+import com.transpos.sale.db.dao.ProductContactDao;
+import com.transpos.sale.db.dao.ProductDao;
+import com.transpos.sale.db.dao.ProductSpecDao;
+import com.transpos.sale.db.dao.ProductUnitDao;
+import com.transpos.sale.db.dao.StoreProductDao;
+import com.transpos.sale.db.dao.SupplierDao;
+import com.transpos.sale.db.dao.WorkerDao;
+import com.transpos.sale.entity.PayMode;
+import com.transpos.sale.entity.Product;
+import com.transpos.sale.entity.ProductBrand;
+import com.transpos.sale.entity.ProductCategory;
+import com.transpos.sale.entity.ProductCode;
+import com.transpos.sale.entity.ProductContact;
+import com.transpos.sale.entity.ProductSpec;
+import com.transpos.sale.entity.ProductUnit;
+import com.transpos.sale.entity.StoreProduct;
+import com.transpos.sale.entity.Supplier;
+import com.transpos.sale.entity.Worker;
 
 //entities表示要包含哪些表；version为数据库的版本，数据库升级时更改；exportSchema是否导出数据库结构，默认为true
-@Database(entities = {Student.class}, version = 1,exportSchema = false)
+@Database(entities = {Student.class, ProductBrand.class, ProductCategory.class, ProductUnit.class,
+        Product.class, ProductCode.class, ProductContact.class, ProductSpec.class, StoreProduct.class,
+        Worker.class, Supplier.class, PayMode.class},
+        version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
-    public abstract StudentDao getStudentDao();
-    private static final String db_path= Environment.getExternalStorageDirectory().getPath()+"/"+"dbtest/my.db";
+
+    private static final String db_path= Environment.getExternalStorageDirectory().getPath()+"/"+"db_store/pos.db";
 
     //单例
     public static AppDatabase getDatabase(){
@@ -28,6 +53,29 @@ public abstract class AppDatabase extends RoomDatabase {
                 .addMigrations(MIGRATION_1_2,MIGRATION_2_3)
                 .build();
     }
+    public abstract StudentDao getStudentDao();
+
+    public abstract ProductBrandDao getProductBrandDao();
+
+    public abstract ProductCategroyDao getProductCategroyDao();
+
+    public abstract ProductUnitDao getProductUnitDao();
+
+    public abstract ProductDao getProductDao();
+
+    public abstract ProductCodeDao getProductCodeDao();
+
+    public abstract ProductContactDao getProcuctContractDao();
+
+    public abstract ProductSpecDao getProductSpecDao();
+
+    public abstract StoreProductDao getStoreProductDao();
+
+    public abstract WorkerDao getWorkerDao();
+
+    public abstract SupplierDao getSupplierDao();
+
+    public abstract PayModeDao getPayModeDao();
 
     /**
      * 数据库升级  version1 -> version2

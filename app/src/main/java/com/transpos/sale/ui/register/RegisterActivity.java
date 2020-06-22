@@ -1,7 +1,9 @@
 package com.transpos.sale.ui.register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +14,7 @@ import com.transpos.sale.base.BaseActivity;
 import com.transpos.sale.base.mvp.BaseMvpActivity;
 import com.transpos.sale.entity.OpenResponse;
 import com.transpos.sale.entity.RegistrationCode;
+import com.transpos.sale.ui.login.LoginActivity;
 import com.transpos.sale.ui.register.mvp.ReginsterPresenter;
 import com.transpos.sale.ui.register.mvp.RegisterContract;
 import com.transpos.sale.utils.KeyConstrant;
@@ -52,6 +55,10 @@ public class RegisterActivity extends BaseMvpActivity<ReginsterPresenter> implem
 
     @Override
     public void onConfirm(String authCode) {
+        if(TextUtils.isEmpty(mInput.getText().toString())){
+            UiUtils.showToastLong("请输入注册码");
+            return;
+        }
         doRegister(authCode);
     }
 
@@ -61,7 +68,10 @@ public class RegisterActivity extends BaseMvpActivity<ReginsterPresenter> implem
 
     @Override
     public void registerSuccess(OpenResponse<RegistrationCode> result) {
-        TPUtils.put(this, KeyConstrant.KEY_AUTH_REGISTER,result.getData());
+        TPUtils.putObject(this, KeyConstrant.KEY_AUTH_REGISTER,result.getData());
         UiUtils.showToastShort("恭喜，注册成功，可以开始正常使用了");
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

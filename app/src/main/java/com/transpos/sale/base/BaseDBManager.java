@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class BaseDBManager<T> {
 
-    private BaseDao<T> baseDao;
+    protected BaseDao<T> baseDao;
 
     public BaseDBManager() {
         this.baseDao = getDataBaseDao();
@@ -38,7 +38,8 @@ public abstract class BaseDBManager<T> {
     }
 
     public List<T> loadAll(){
-        return baseDao.loadAll();
+//        return baseDao.loadAll();
+        return null;
     }
 
     public int delete(T bean){
@@ -50,7 +51,8 @@ public abstract class BaseDBManager<T> {
     }
 
     public int deleteAll(){
-        return baseDao.deleteAll();
+//        return baseDao.deleteAll();
+        return 0;
     }
 
 

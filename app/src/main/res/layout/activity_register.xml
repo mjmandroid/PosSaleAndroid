@@ -31,6 +31,7 @@
             android:layout_height="@dimen/dp_80"
             android:background="@drawable/shape_input_back"
             android:hint="请输入注册码"
+            android:gravity="center_vertical"
             android:paddingLeft="@dimen/dp_30"
             android:paddingRight="@dimen/dp_30"
             android:singleLine="true"

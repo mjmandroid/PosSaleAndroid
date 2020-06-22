@@ -10,7 +10,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-@Dao
+
 public interface  BaseDao<T> {
     /**
      * 插入操作,若已存在相同的主键的数据则直接覆盖
@@ -58,14 +58,15 @@ public interface  BaseDao<T> {
      * @return
      */
 //    @Query("SELECT * FROM student WHERE name=:name")
-    T getByName(String name);
+//    T getByName(String name);
 
     /**
      * 查询所有数据
      * @return
      */
 //    @Query("SELECT * FROM student")
-    List<T> loadAll();
+
+//    List<T> loadAll();
 
     /**
      * 根据主键进行删除
@@ -79,7 +80,8 @@ public interface  BaseDao<T> {
     int delete(T... beans);
 
 //    @Query("DELETE FROM student")
-    int deleteAll();
+
+//    int deleteAll();
 
     /**
      * 删除指定名字的数据
@@ -87,6 +89,6 @@ public interface  BaseDao<T> {
      * @return
      */
 //    @Query("DELETE FROM student where name=:name")
-    int deleteByName(String name);
+//    int deleteByName(String name);
 
 }

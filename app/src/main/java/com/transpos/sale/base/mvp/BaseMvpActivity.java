@@ -40,12 +40,9 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
     //***************************************IBaseView方法实现*************************************
     @Override
     public void showLoading() {
-        showLoading("");
-    }
-
-    public void showLoading(String msg) {
 
     }
+
 
     @Override
     public void dismissLoading() {

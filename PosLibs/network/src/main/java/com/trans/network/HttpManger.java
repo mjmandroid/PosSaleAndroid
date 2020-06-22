@@ -97,6 +97,11 @@ public class HttpManger implements IHttpEngine {
     }
 
     @Override
+    public String postString(String url, Map<String, Object> params) {
+        return httpEngine.postString(url,params);
+    }
+
+    @Override
     public void getFile(String url, FileCallback callBack) {
         httpEngine.getFile(url,callBack);
     }

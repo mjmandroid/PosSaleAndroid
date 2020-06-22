@@ -75,11 +75,7 @@ public class RegisterKeyboardView extends FrameLayout {
         }
         if(view.getId() == R.id.tv_confirm){
             if(mOnInputContentListener != null){
-                if(TextUtils.isEmpty(content.toString())){
-                    UiUtils.showToastLong("请输入注册码");
-                } else {
-                    mOnInputContentListener.onConfirm(content.toString());
-                }
+                mOnInputContentListener.onConfirm(content.toString());
             }
         } else {
             if(mOnInputContentListener != null){
@@ -87,6 +83,13 @@ public class RegisterKeyboardView extends FrameLayout {
             }
         }
 
+    }
+
+    public void setContent(String input){
+        if(content.length() > 0){
+            content.delete(0,content.length());
+        }
+        content.append(input);
     }
 
     public interface OnInputContentListener{

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.trans.network.HttpManger;
+import com.transpos.sale.utils.KeyConstrant;
+import com.transpos.tools.tputils.TPUtils;
 
 public class BaseApp extends Application {
 
@@ -18,5 +20,11 @@ public class BaseApp extends Application {
 
     public static Application getApplication(){
         return mContext;
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+//        TPUtils.remove(this, KeyConstrant.KEY_WORKER);
     }
 }

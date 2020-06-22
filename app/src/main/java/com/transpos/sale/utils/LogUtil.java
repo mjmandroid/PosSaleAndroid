@@ -9,7 +9,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 public class LogUtil {
 
-    private static final String TAG = "LogUtil";
+    public static final String TAG = "LogUtil";
 
     private static final int VERBOSE = 1;
 
@@ -116,12 +116,12 @@ public class LogUtil {
     }
 
     public static void save2file(String tag, String level, String msg){
-        try{
-            //加入队列
-            msgQueue.offer(String.format("%s %s %s %s", DateUtil.getNowMillSecondDateStr(), tag, level, msg));
-        }catch (Exception ex){
-            Log.e(TAG, "save2file: 放入日志队列发生异常", ex);
-        }
+//        try{
+//            //加入队列
+//            msgQueue.offer(String.format("%s %s %s %s", DateUtil.getNowMillSecondDateStr(), tag, level, msg));
+//        }catch (Exception ex){
+//            Log.e(TAG, "save2file: 放入日志队列发生异常", ex);
+//        }
     }
 
 }

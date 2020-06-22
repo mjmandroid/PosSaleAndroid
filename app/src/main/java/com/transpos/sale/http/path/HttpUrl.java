@@ -1,5 +1,7 @@
 package com.transpos.sale.http.path;
 
+import com.transpos.sale.BuildConfig;
+
 public class HttpUrl {
 
     public static final String BASE_OPEN_URL = "http://test.trangol.com.cn:58080/api/extend";

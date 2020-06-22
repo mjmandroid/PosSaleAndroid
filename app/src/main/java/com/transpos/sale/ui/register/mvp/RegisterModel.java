@@ -27,10 +27,8 @@ public class RegisterModel implements RegisterContract.Model {
         parameters.put("cpuNumber", device.getCpuID());
         parameters.put("authCode", authCode);
         parameters.put("sign", OpenApiUtils.getInstance().sign(parameters, new ArrayList<String>()));
-        Log.e("OkHttp", device.getMacAddress()+"--"+parameters.get("timestamp") );
 
-
-//        HttpManger.getSingleton().postString(HttpUrl.BASE_OPEN_URL, parameters, stringCallback);
-        HttpManger.getSingleton().postJsonString(HttpUrl.BASE_OPEN_URL, parameters, stringCallback);
+        HttpManger.getSingleton().postString(HttpUrl.BASE_OPEN_URL, parameters, stringCallback);
+//        HttpManger.getSingleton().postJsonString(HttpUrl.BASE_OPEN_URL, parameters, stringCallback);
     }
 }

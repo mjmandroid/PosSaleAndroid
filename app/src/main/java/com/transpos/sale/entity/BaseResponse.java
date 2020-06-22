@@ -1,7 +1,7 @@
 package com.transpos.sale.entity;
 
 public class BaseResponse {
-
+    public static final int SUCCESS = 0;
     /**
      * 0成功  其他都是失败
      */
