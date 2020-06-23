@@ -13,12 +13,16 @@ import com.transpos.sale.entity.DownloadCacheName;
 import com.transpos.sale.entity.DownloadNotify;
 import com.transpos.sale.entity.Tuple2;
 import com.transpos.sale.thread.ThreadDispatcher;
+import com.transpos.sale.utils.DateUtil;
 import com.transpos.sale.utils.FoodConstant;
 import com.transpos.sale.utils.Global;
+import com.transpos.sale.utils.KeyConstrant;
 import com.transpos.sale.utils.LogUtil;
+import com.transpos.tools.tputils.TPUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +31,8 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
     protected FoodContract.Model createModule() {
         return new FoodModel();
     }
+
+    private static final String TAG = FoodPrestener.class.getSimpleName();
 
     @Override
     public void startDownload() {
@@ -49,40 +55,72 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
 
             @Override
             public void onError(Response<String> response) {
-
+                getView().dismissLoading();
+                LogUtil.e(LogUtil.TAG, String.format("发掘新数据error失败:%s", response.message()));
             }
+
 
         });
     }
 
     private void compareVersion(final List<Map<String, String>> datas) {
+        Log.e(TAG, "run: compareVersion");
         ThreadDispatcher.getDispatcher().post(new Runnable() {
             @Override
             public void run() {
+                List<Map<String,String>> localList = TPUtils.getObject(getContext(),KeyConstrant.KEY_DATA_VERSION,List.class);
                 List<String> needDownload = Arrays.asList(Global.downloadDataType);
                 List<Tuple2<String, String>> vLists = new ArrayList<>();
                 for (Map<String, String> map : datas) {
                     String stype = map.get("dataType");
                     String sversion = map.get("dataVersion");
-                    boolean isNeedUpdate = true;
-                    if (!needDownload.contains(stype)) {
-                        isNeedUpdate = false;
+                    boolean isNeedUpdate = false;
+                    if (needDownload.contains(stype)) {
+                        if(localList != null){
+                            for (Map<String, String> localMap : localList) {
+                                if(stype.equals(localMap.get("dataType"))){
+                                    if(!sversion.equals(localMap.get("dataVersion"))){
+                                        isNeedUpdate = true;
+                                    }
+                                    break;
+                                }
+                            }
+                        } else {
+                            isNeedUpdate = true;
+                        }
                     }
                     if (isNeedUpdate)
                         vLists.add(new Tuple2<String, String>(stype, sversion));
                 }
                 if (vLists.size() == 0) {
-                    LogUtil.e(LogUtil.TAG, "本地为最新数据");
+                    completeDownload();
+                    Log.e(TAG, "run: "+"本地为最新数据");
                     return;
                 }
+                Log.e(TAG, "run: "+DateUtil.getNowMillSecondDateStr());
                 for (Tuple2<String, String> list : vLists) {
                     String dataType = list.first;
                     DownloadCacheName downloadCacheName = DownloadCacheName.valueOf(dataType);
                     realDownload(downloadCacheName);
                 }
+                TPUtils.putObject(getContext(), KeyConstrant.KEY_DATA_VERSION,datas);
+                completeDownload();
+                Log.e(TAG, "run: "+DateUtil.getNowMillSecondDateStr());
             }
         });
 
+    }
+
+    /**
+     * 下载完成
+     */
+    private void completeDownload() {
+        ThreadDispatcher.getDispatcher().postOnMain(new Runnable() {
+            @Override
+            public void run() {
+                getView().dismissLoading();
+            }
+        });
     }
 
     private void realDownload(DownloadCacheName type) {
@@ -125,38 +163,27 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
             break;
             case MEMBER_SETTING: {
                 //会员设置
-//                downloadMemberSetting();
+                downloadMemberSetting();
             }
             break;
             case MEMBER_LEVEL: {
                 //会员等级
-//                downloadMemberLevel();
-//                downloadMemberLevelCategoryDiscount();
+                downloadMemberLevel();
+                downloadMemberLevelCategoryDiscount();
             }
             break;
-//                case MEMBER_TYPE:
-//                {
-//                    downloadMemberType();
-//                }
-//                break;
-//                case MEMBER_TAG:
-//                {
-//                    downloadMemberTagGroup();
-//                    downloadMemberTag();
-//                }
-//                break;
             case MEMBER_POINT_RULE: {
-//                downloadMemberPointRule();
-//                downloadMemberPointRuleCategory();
-//                downloadMemberPointRuleBrand();
+                downloadMemberPointRule();
+                downloadMemberPointRuleCategory();
+                downloadMemberPointRuleBrand();
             }
             break;
             case PAY_SETTING: {
-//                downloadPaymentParameter();
+                downloadPaymentParameter();
             }
             break;
             case LINE_SALES_SETTING: {
-//                downloadSalesSetting();
+                downloadSalesSetting();
             }
             break;
             default: {
@@ -164,6 +191,46 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
             }
             break;
         }
+    }
+
+    private void downloadSalesSetting() {
+        DownloadNotify notify = getModule().fetchSalesSetting();
+        LogUtil.d(TAG,notify.getMessage());
+    }
+
+    private void downloadPaymentParameter() {
+        DownloadNotify notify = getModule().fetchPaymentParameter();
+        LogUtil.d(TAG,notify.getMessage());
+    }
+
+    private void downloadMemberPointRuleBrand() {
+        DownloadNotify notify = getModule().fetchMemberPointRuleBrand();
+        LogUtil.d(TAG,notify.getMessage());
+    }
+
+    private void downloadMemberPointRuleCategory() {
+        DownloadNotify notify = getModule().fetchMemberPointRuleCategory();
+        LogUtil.d(TAG,notify.getMessage());
+    }
+
+    private void downloadMemberPointRule() {
+        DownloadNotify notify = getModule().fetchMemberPointRule();
+        LogUtil.d(TAG,notify.getMessage());
+    }
+
+    private void downloadMemberLevelCategoryDiscount() {
+        DownloadNotify notify = getModule().fetchMemberLevelCategoryDiscount();
+        LogUtil.d(TAG,notify.getMessage());
+    }
+
+    private void downloadMemberLevel() {
+        DownloadNotify notify = getModule().fetchMemberLevel();
+        LogUtil.d(TAG,notify.getMessage());
+    }
+
+    private void downloadMemberSetting() {
+        DownloadNotify notify = getModule().fetchMemberSetting();
+        LogUtil.d(TAG,notify.getMessage());
     }
 
     private void downloadStoreInfo(int pageIndex, int defaultPagesize) {
@@ -174,10 +241,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadStoreInfo(page,pageSize);
+                    getModule().fetchStoreInfo(page,pageSize);
                 }
             }
         }
+        LogUtil.d(TAG,notify.getMessage());
     }
 
     private void downloadPayMode(int pageIndex, int defaultPagesize) {
@@ -188,10 +256,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadPayMode(page,pageSize);
+                    getModule().fetchPayMode(page,pageSize);
                 }
             }
         }
+        LogUtil.d(TAG,notify.getMessage());
     }
 
     private void downloadSupplier(int pageIndex, int defaultPagesize) {
@@ -202,10 +271,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadSupplier(page,pageSize);
+                    getModule().fetchSupplier(page,pageSize);
                 }
             }
         }
+        LogUtil.d(TAG,notify.getMessage());
     }
 
     private void downloadWorker(int pageIndex, int defaultPagesize) {
@@ -216,10 +286,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadWorker(page,pageSize);
+                    getModule().fetchWorker(page,pageSize);
                 }
             }
         }
+        LogUtil.d(TAG,notify.getMessage());
     }
 
     private void downloadStoreProduct(int pageIndex, int defaultPagesize) {
@@ -230,10 +301,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadStoreProduct(page,pageSize);
+                    getModule().fetchStoreProduct(page,pageSize);
                 }
             }
         }
+        LogUtil.d(TAG,notify.getMessage());
     }
 
     private void downloadProductSpec(int pageIndex, int defaultPagesize) {
@@ -244,10 +316,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadProductSpec(page,pageSize);
+                    getModule().fetchProductSpec(page,pageSize);
                 }
             }
         }
+        LogUtil.d(TAG,notify.getMessage());
     }
 
     private void downloadProductContact(int pageIndex, int defaultPagesize) {
@@ -258,10 +331,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadProductContact(page,pageSize);
+                    getModule().fetchProductContact(page,pageSize);
                 }
             }
         }
+        LogUtil.d(TAG,notify.getMessage());
     }
 
     private void downloadProductCode(int pageIndex, int defaultPagesize) {
@@ -272,10 +346,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadProductCode(page,pageSize);
+                    getModule().fetchProductCode(page,pageSize);
                 }
             }
         }
+        LogUtil.d(TAG,notify.getMessage());
     }
 
     private void downloadProduct(int pageIndex, int defaultPagesize) {
@@ -286,10 +361,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadProduct(page,pageSize);
+                    getModule().fetchProduct(page,pageSize);
                 }
             }
         }
+
     }
 
     private void downloadProductUnit(int pageIndex, int defaultPagesize) {
@@ -300,10 +376,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadProductUnit(page,pageSize);
+                    getModule().fetchProductUnit(page,pageSize);
                 }
             }
         }
+        LogUtil.d(TAG,notify.getMessage());
     }
 
     private void downloadProductCategory(int pageIndex, int defaultPagesize) {
@@ -314,10 +391,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadProductCategory(page,pageSize);
+                    getModule().fetchProductCategroy(page,pageSize);
                 }
             }
         }
+        LogUtil.d(TAG,notify.getMessage());
     }
 
     private void downloadProductBrand(int pageIndex,int size) {
@@ -328,9 +406,10 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 int pageSize = notify.getPageSize();
                 int pageCount = notify.getPageCount();
                 for (int page = pageNum + 1; page < pageCount + 1; page++){
-                    downloadProductBrand(page,pageSize);
+                    getModule().fetchProductBrand(page,pageSize);
                 }
             }
         }
+        LogUtil.d(TAG,notify.getMessage());
     }
 }

@@ -60,6 +60,9 @@
     <color name="possible_result_points">#c0ffbd21</color>
     <color name="color_order">#F5DEB3</color>
     <color name="color_select_order">#FECB6E</color>
+    <color name="color_2F2F2F">#2F2F2F</color>
+    <color name="color_FF8E00">#FF8E00</color>
+    <color name="color_FFC900">#FFC900</color>
 
     <!-- Android standard ICS color -->
     <color name="result_minor_text">#ffc0c0c0</color>

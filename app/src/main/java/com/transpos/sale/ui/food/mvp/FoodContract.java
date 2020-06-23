@@ -21,6 +21,14 @@ public interface FoodContract {
         DownloadNotify fetchSupplier(int pageNum, int pageSize);
         DownloadNotify fetchPayMode(int pageNum, int pageSize);
         DownloadNotify fetchStoreInfo(int pageNum, int pageSize);
+        DownloadNotify fetchMemberSetting();
+        DownloadNotify fetchMemberLevel();
+        DownloadNotify fetchMemberLevelCategoryDiscount();
+        DownloadNotify fetchMemberPointRule();
+        DownloadNotify fetchMemberPointRuleCategory();
+        DownloadNotify fetchMemberPointRuleBrand();
+        DownloadNotify fetchPaymentParameter();
+        DownloadNotify fetchSalesSetting();
     }
 
     interface View extends IBaseView{

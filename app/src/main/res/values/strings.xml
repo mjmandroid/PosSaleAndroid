@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PosSaleOs</string>
+    <string name="txt_welcome_use">欢迎使用</string>
+    <string name="txt_start_cash">开始自助结账</string>
 </resources>

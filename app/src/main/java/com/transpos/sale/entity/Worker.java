@@ -2,6 +2,7 @@ package com.transpos.sale.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 
 import java.util.List;
 
@@ -161,7 +162,7 @@ public class Worker extends BaseEntity {
     /// <summary>
     /// 当前操作员的模块权限
     /// </summary>
-    @ColumnInfo
+    @Ignore
     private List<String> permission;
 
     /// <summary>

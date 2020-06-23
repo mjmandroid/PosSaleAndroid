@@ -26,6 +26,10 @@ public class LoadingDialog {
     public LoadingDialog(Context context) {
         this.context = context;
     }
+    public LoadingDialog(Context context,String msg) {
+        this.context = context;
+        this.msg = msg;
+    }
 
     /**
      * 设置提示信息

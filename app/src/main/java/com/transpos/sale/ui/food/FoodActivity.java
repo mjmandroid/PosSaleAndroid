@@ -1,12 +1,22 @@
 package com.transpos.sale.ui.food;
 
+import android.content.Intent;
+import android.view.View;
+
 import com.transpos.sale.R;
 import com.transpos.sale.base.BaseActivity;
 import com.transpos.sale.base.mvp.BaseMvpActivity;
 import com.transpos.sale.ui.food.mvp.FoodContract;
 import com.transpos.sale.ui.food.mvp.FoodPrestener;
+import com.transpos.sale.ui.navi.VipSelectActivity;
+import com.transpos.sale.view.dialog.LoadingDialog;
+
+import butterknife.OnClick;
 
 public class FoodActivity extends BaseMvpActivity<FoodPrestener> implements FoodContract.View {
+
+    private LoadingDialog mLoadingDialog;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_food_home;
@@ -36,12 +46,26 @@ public class FoodActivity extends BaseMvpActivity<FoodPrestener> implements Food
 
     @Override
     public void showLoading() {
-
+        if(mLoadingDialog == null){
+            mLoadingDialog = new LoadingDialog(this,"下载中...");
+        }
+        mLoadingDialog.show();
     }
 
     @Override
     public void dismissLoading() {
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
+    }
 
+    @OnClick({R.id.btn_start})
+    public void onViewClick(View view){
+        switch (view.getId()){
+            case R.id.btn_start:
+                startActivity(new Intent(this, VipSelectActivity.class));
+                break;
+        }
     }
 
     @Override
