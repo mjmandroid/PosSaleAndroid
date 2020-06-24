@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/viw_actionbar_layout"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/color_2F2F2F"
+        android:textSize="@dimen/sp_19"
+        android:layout_marginTop="@dimen/dp_130"
+        android:text="@string/txt_input_register_vip"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/color_2F2F2F"
+        android:textSize="@dimen/sp_28"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="@string/txt_11_phone"/>
+    
+    <com.transpos.sale.view.ClearEditText
+        android:layout_width="@dimen/dp_210"
+        android:layout_marginTop="@dimen/dp_61"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layerlist_clear_edit_bg"/>
+</LinearLayout>

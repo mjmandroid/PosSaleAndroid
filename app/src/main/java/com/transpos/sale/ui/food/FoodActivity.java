@@ -9,6 +9,7 @@ import com.transpos.sale.base.mvp.BaseMvpActivity;
 import com.transpos.sale.ui.food.mvp.FoodContract;
 import com.transpos.sale.ui.food.mvp.FoodPrestener;
 import com.transpos.sale.ui.navi.VipSelectActivity;
+import com.transpos.sale.ui.set.SettingActivity;
 import com.transpos.sale.view.dialog.LoadingDialog;
 
 import butterknife.OnClick;
@@ -16,6 +17,7 @@ import butterknife.OnClick;
 public class FoodActivity extends BaseMvpActivity<FoodPrestener> implements FoodContract.View {
 
     private LoadingDialog mLoadingDialog;
+    private boolean isInit;
 
     @Override
     protected int getLayoutId() {
@@ -36,7 +38,11 @@ public class FoodActivity extends BaseMvpActivity<FoodPrestener> implements Food
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.startDownload();
+        if(!isInit){
+            isInit = true;
+            presenter.startDownload();
+        }
+
     }
 
     @Override
@@ -59,11 +65,14 @@ public class FoodActivity extends BaseMvpActivity<FoodPrestener> implements Food
         }
     }
 
-    @OnClick({R.id.btn_start})
+    @OnClick({R.id.btn_start,R.id.btn_tips})
     public void onViewClick(View view){
         switch (view.getId()){
             case R.id.btn_start:
                 startActivity(new Intent(this, VipSelectActivity.class));
+                break;
+            case R.id.btn_tips:
+                startActivity(new Intent(this, SettingActivity.class));
                 break;
         }
     }

@@ -67,6 +67,13 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.navi.VipSelectActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.set.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.navi.VipLoginWaysActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.navi.PhoneLoginActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
