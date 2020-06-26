@@ -49,6 +49,8 @@ import com.transpos.sale.entity.StoreProduct;
 import com.transpos.sale.entity.Supplier;
 import com.transpos.sale.entity.Worker;
 
+import java.io.File;
+
 //entities表示要包含哪些表；version为数据库的版本，数据库升级时更改；exportSchema是否导出数据库结构，默认为true
 @Database(entities = {Student.class, ProductBrand.class, ProductCategory.class, ProductUnit.class,
         Product.class, ProductCode.class, ProductContact.class, ProductSpec.class, StoreProduct.class,
@@ -60,7 +62,8 @@ import com.transpos.sale.entity.Worker;
 public abstract class AppDatabase extends RoomDatabase {
 
 
-    private static final String db_path= Environment.getExternalStorageDirectory().getPath()+"/"+"db_store/pos.db";
+//    外部存储 应用卸载数据也丢弃
+    private static final String db_path = BaseApp.getApplication().getExternalFilesDir(null).getPath()+ File.separator+"db_store/pos.db";
 
     //单例
     public static AppDatabase getDatabase(){

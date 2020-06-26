@@ -20,11 +20,14 @@ import com.transpos.sale.thread.Priority;
 import com.trans.network.utils.HttpUtils;
 import com.transpos.sale.thread.ThreadDispatcher;
 import com.transpos.tools.FileUtils;
+import com.transpos.tools.GenericityUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -173,6 +176,20 @@ public class HttpEngineImpl implements IHttpEngine {
     @Override
     public void postString(String url, Map<String, Object> params, StringCallback callBack, Priority priority) {
         postString(url,params,null,callBack,priority);
+    }
+
+    @Override
+    public <T> void postJsonObject(String url, Map<String, Object> params, String tag, BaseCallback<T> callback) {
+        Map<String, Object> postParams = genParams(params);
+        RequestBody body = RequestBody.create(HttpParams.MEDIA_TYPE_JSON, GsonHelper.toJson(postParams));
+        Request.Builder reqBuilder = new Request.Builder()
+                .url(url)
+                .headers(Headers.of(mCommonHeaders))
+                .post(body);
+        if (tag != null) {
+            reqBuilder.tag(tag);
+        }
+        doRequest(reqBuilder.build(), callback, new OkJsonObjectCallback<>(callback),false);
     }
 
     @Override
@@ -424,6 +441,69 @@ public class HttpEngineImpl implements IHttpEngine {
             if (mInnerCallback == null)
                 return;
             final com.trans.network.model.Response<String> resp = com.trans.network.model.Response
+                    .error(false, call, null, e);
+            runOnMain(new Runnable() {
+                @Override
+                public void run() {
+                    mInnerCallback.onError(resp);
+                }
+            });
+            doRequestFinish(call, mInnerCallback);
+        }
+    }
+
+    class OkJsonObjectCallback<T> implements Callback {
+        private BaseCallback<T> mInnerCallback;
+
+        OkJsonObjectCallback(BaseCallback<T> innerCallback) {
+            mInnerCallback = innerCallback;
+        }
+
+        @Override
+        public void onResponse(final Call call, final Response response) {
+            if (mInnerCallback == null)
+                return;
+            boolean callOnFail = true;
+            Exception ex = null;
+            if (200 == response.code()) {
+                String bodyContent = null;
+                try {
+                    if (response.body() != null) {
+                        bodyContent = response.body().string();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ex = e;
+                }
+                if (!TextUtils.isEmpty(bodyContent)) {
+                    Type type = ((ParameterizedType)mInnerCallback.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+                    T o = (T) GsonHelper.fromJson(bodyContent, type);
+                    final com.trans.network.model.Response<T> resp = com.trans.network.model.Response
+                            .success(false, o, call, response);
+                    runOnMain(new Runnable() {
+                        @Override
+                        public void run() {
+                            mInnerCallback.onSuccess(resp);
+                        }
+                    });
+                    doRequestFinish(call, mInnerCallback);
+                    callOnFail = false;
+                }
+            }
+            if (callOnFail) {
+                if (ex instanceof IOException) {
+                    onFailure(call, (IOException) ex);
+                } else {
+                    onFailure(call, new IOException(String.valueOf(ex)));
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(final Call call, IOException e) {
+            if (mInnerCallback == null)
+                return;
+            final com.trans.network.model.Response<T> resp = com.trans.network.model.Response
                     .error(false, call, null, e);
             runOnMain(new Runnable() {
                 @Override

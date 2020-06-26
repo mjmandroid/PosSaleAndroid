@@ -3,6 +3,7 @@ package com.transpos.sale.ui.food.mvp;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
+import com.trans.network.callback.JsonObjectCallback;
 import com.trans.network.callback.StringCallback;
 import com.trans.network.model.Response;
 import com.trans.network.utils.GsonHelper;
@@ -33,6 +34,8 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
     }
 
     private static final String TAG = FoodPrestener.class.getSimpleName();
+    private Object mLock = new Object();
+    private volatile int threadCount = 0;
 
     @Override
     public void startDownload() {
@@ -70,7 +73,7 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
             public void run() {
                 List<Map<String,String>> localList = TPUtils.getObject(getContext(),KeyConstrant.KEY_DATA_VERSION,List.class);
                 List<String> needDownload = Arrays.asList(Global.downloadDataType);
-                List<Tuple2<String, String>> vLists = new ArrayList<>();
+                final List<Tuple2<String, String>> vLists = new ArrayList<>();
                 for (Map<String, String> map : datas) {
                     String stype = map.get("dataType");
                     String sversion = map.get("dataVersion");
@@ -98,14 +101,19 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                     return;
                 }
                 Log.e(TAG, "run: "+DateUtil.getNowMillSecondDateStr());
+                threadCount = 0;
                 for (Tuple2<String, String> list : vLists) {
                     String dataType = list.first;
-                    DownloadCacheName downloadCacheName = DownloadCacheName.valueOf(dataType);
-                    realDownload(downloadCacheName);
+                    final DownloadCacheName downloadCacheName = DownloadCacheName.valueOf(dataType);
+                    ThreadDispatcher.getDispatcher().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            realDownload(downloadCacheName,vLists.size());
+                        }
+                    });
+
                 }
                 TPUtils.putObject(getContext(), KeyConstrant.KEY_DATA_VERSION,datas);
-                completeDownload();
-                Log.e(TAG, "run: "+DateUtil.getNowMillSecondDateStr());
             }
         });
 
@@ -115,6 +123,7 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
      * 下载完成
      */
     private void completeDownload() {
+        Log.e(TAG, "run: "+DateUtil.getNowMillSecondDateStr());
         ThreadDispatcher.getDispatcher().postOnMain(new Runnable() {
             @Override
             public void run() {
@@ -123,7 +132,7 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
         });
     }
 
-    private void realDownload(DownloadCacheName type) {
+    private void realDownload(DownloadCacheName type, int size) {
         switch (type) {
             case PRODUCT_BRAND: {
                 downloadProductBrand(1,FoodConstant.DEFAULT_PAGESIZE);
@@ -190,6 +199,12 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
 
             }
             break;
+        }
+        synchronized (mLock){
+            threadCount ++;
+            if(threadCount >= size){
+                completeDownload();
+            }
         }
     }
 

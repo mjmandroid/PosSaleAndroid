@@ -3,6 +3,7 @@ package com.transpos.sale.ui.login;
 import android.content.Intent;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.transpos.sale.R;
 import com.transpos.sale.base.BaseActivity;
+import com.transpos.sale.base.BaseApp;
 import com.transpos.sale.base.mvp.BaseMvpActivity;
 import com.transpos.sale.entity.EntityResponse;
 import com.transpos.sale.entity.RegistrationCode;
@@ -23,6 +25,8 @@ import com.transpos.sale.utils.UiUtils;
 import com.transpos.sale.view.RegisterKeyboardView;
 import com.transpos.sale.view.dialog.LoadingDialog;
 import com.transpos.tools.tputils.TPUtils;
+
+import java.io.File;
 
 import butterknife.Bind;
 

@@ -1,7 +1,10 @@
 package com.transpos.sale.ui.food.mvp;
 
+import android.net.Uri;
+
 import com.google.gson.reflect.TypeToken;
 import com.trans.network.HttpManger;
+import com.trans.network.callback.BaseCallback;
 import com.trans.network.callback.StringCallback;
 import com.trans.network.utils.GsonHelper;
 import com.transpos.sale.base.BaseApp;

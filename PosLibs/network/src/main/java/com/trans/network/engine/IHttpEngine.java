@@ -2,6 +2,7 @@ package com.trans.network.engine;
 
 import android.content.Context;
 
+import com.trans.network.callback.BaseCallback;
 import com.trans.network.callback.FileCallback;
 import com.trans.network.callback.StringCallback;
 import com.transpos.sale.thread.Priority;
@@ -38,6 +39,8 @@ public interface IHttpEngine {
     void postString(String url, Map<String, Object> params, String tag, StringCallback callBack);
 
     void postString(String url, Map<String, Object> params, StringCallback callBack, Priority priority);
+
+    <T> void postJsonObject(String url, Map<String, Object> params,String tag, BaseCallback<T> callback);
 
     void postString(String url, Map<String, Object> params, String tag, StringCallback callBack, Priority priority);
 

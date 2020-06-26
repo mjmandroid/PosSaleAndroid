@@ -1,5 +1,6 @@
 package com.transpos.sale.ui.food.mvp;
 
+import com.trans.network.callback.BaseCallback;
 import com.trans.network.callback.StringCallback;
 import com.transpos.sale.base.mvp.IBaseModel;
 import com.transpos.sale.base.mvp.IBaseView;
