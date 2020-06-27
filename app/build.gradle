@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion "${COMPILESDKVERSION}" as int
@@ -10,6 +12,11 @@ android {
         versionName "${VERSIONNAME}"
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
     buildTypes {
         release {
@@ -37,5 +44,6 @@ dependencies {
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${ADAPTER_VERSION}"
     //头条适配方案
     implementation "me.jessyan:autosize:${AUTOSIZE_VERSION}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${KOTLIN_VERSION}"
 
 }
