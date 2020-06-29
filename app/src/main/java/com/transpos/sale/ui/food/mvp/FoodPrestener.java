@@ -74,6 +74,11 @@ public class FoodPrestener extends BasePresenter<FoodContract.Model, FoodContrac
                 List<Map<String,String>> localList = TPUtils.getObject(getContext(),KeyConstrant.KEY_DATA_VERSION,List.class);
                 List<String> needDownload = Arrays.asList(Global.downloadDataType);
                 final List<Tuple2<String, String>> vLists = new ArrayList<>();
+                if(localList != null && localList.size() > 0){
+                    String localJson = GsonHelper.toJson(localList);
+                    String serverJson = GsonHelper.toJson(datas);
+                    Log.e(TAG, "run: "+localJson +"\n====" +serverJson);
+                }
                 for (Map<String, String> map : datas) {
                     String stype = map.get("dataType");
                     String sversion = map.get("dataVersion");

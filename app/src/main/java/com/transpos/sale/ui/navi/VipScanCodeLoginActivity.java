@@ -16,66 +16,57 @@ import com.transpos.sale.view.CustomGradient;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class VipLoginWaysActivity extends BaseActivity {
+public class VipScanCodeLoginActivity extends BaseActivity {
 
-    @Bind(R.id.ll_back)
-    LinearLayout ll_back;
+    private CountTimer mTimeCount;
     @Bind(R.id.tv_deal)
     TextView tv_deal;
-    private CountTimer mCountTimer;
+    @Bind(R.id.ll_back)
+    LinearLayout ll_back;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_vip_login_ways;
+        return R.layout.activity_navi_vip_scan_login;
     }
-
 
     @Override
     protected void initView() {
+        super.initView();
+        tv_deal.setVisibility(View.VISIBLE);
         ll_back.setBackground(new CustomGradient(GradientDrawable.Orientation.LEFT_RIGHT,
                 new int[]{Color.parseColor("#FFB200"),Color.parseColor("#FF7B00")},
                 UiUtils.dp2px(4,this)));
-        tv_deal.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void initData() {
         super.initData();
-        mCountTimer = new CountTimer(300*1000L,1000L,this,tv_deal);
-        tv_deal.setText(getString(R.string.txt_actionbar_content,"300"));
-        mCountTimer.start();
+        String reslut = getString(R.string.txt_actionbar_content);
+        tv_deal.setText(String.format(reslut,"300"));
+        mTimeCount = new CountTimer(300*1000L,1000L,this,tv_deal);
+        mTimeCount.start();
+    }
+
+    @OnClick({R.id.ll_back,R.id.tv_deal})
+    public void onViewClick(View view){
+        switch (view.getId()){
+            case R.id.ll_back:
+            case R.id.tv_deal:
+                if(mTimeCount != null){
+                    mTimeCount.cancel();
+                    mTimeCount = null;
+                }
+                startActivity(FoodActivity.class);
+                break;
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(mCountTimer != null){
-            mCountTimer.cancel();
-            mCountTimer = null;
-        }
-
-    }
-
-    @OnClick({R.id.iv_phone,R.id.iv_vip,R.id.iv_face,R.id.ll_back,R.id.tv_deal})
-    public void onViewClick(View view){
-        switch (view.getId()){
-            case R.id.iv_phone:
-                startActivity(PhoneLoginActivity.class);
-                break;
-            case R.id.iv_vip:
-                startActivity(VipScanCodeLoginActivity.class);
-                break;
-            case R.id.iv_face:
-                startActivity(FaceLoginActivity.class);
-                break;
-            case R.id.ll_back:
-            case R.id.tv_deal:
-                if(mCountTimer != null){
-                    mCountTimer.cancel();
-                    mCountTimer = null;
-                }
-                startActivity(FoodActivity.class);
-                break;
+        if(mTimeCount != null){
+            mTimeCount.cancel();
+            mTimeCount = null;
         }
     }
 }

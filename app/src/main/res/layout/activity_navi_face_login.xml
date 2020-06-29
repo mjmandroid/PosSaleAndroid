@@ -14,7 +14,7 @@
         android:textColor="@color/color_2F2F2F"
         android:textSize="@dimen/sp_19"
         android:layout_marginTop="@dimen/dp_130"
-        android:text="@string/txt_input_register_vip"/>
+        android:text="@string/txt_look_camera"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,45 +22,15 @@
         android:textColor="@color/color_2F2F2F"
         android:textSize="@dimen/sp_28"
         android:layout_marginTop="@dimen/dp_10"
-        android:text="@string/txt_11_phone"/>
-    
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:text="@string/txt_face_login"/>
+    <ImageView
+        android:id="@+id/iv_circle"
+        android:layout_width="@dimen/dp_173"
+        android:layout_height="@dimen/dp_173"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dp_61"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="@dimen/dp_21"
-            android:layout_height="@dimen/dp_33"
-            android:src="@mipmap/ic_phone"
-            android:scaleType="centerCrop"/>
-        <com.transpos.sale.view.ClearEditText
-            android:id="@+id/et_phone"
-            android:layout_width="@dimen/dp_210"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_marginLeft="@dimen/dp_12"
-            android:background="@drawable/layerlist_clear_edit_bg"
-            android:layout_gravity="bottom"/>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/tv_phone_number_error"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/txt_phone_num_error"
-        android:textSize="@dimen/sp_14"
-        android:textColor="@color/color_FF1E00"
-        android:layout_marginTop="@dimen/dp_9"/>
+        android:scaleType="centerCrop"
+        android:layout_marginTop="@dimen/dp_31"/>
 
-    <com.transpos.sale.view.PhoneVipKeyboardView
-        android:id="@+id/phoneKeyboardView"
-        android:layout_width="@dimen/dp_245"
-        android:layout_height="@dimen/dp_202"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dp_11"/>
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -64,6 +64,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.food.FoodActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.navi.VipSelectActivity"
             android:screenOrientation="portrait"/>
@@ -73,6 +74,12 @@
         <activity android:name=".ui.navi.VipLoginWaysActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.navi.PhoneLoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.navi.VipScanCodeLoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.navi.FaceLoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.scan.PromptScanCodeActivity"
             android:screenOrientation="portrait"/>
     </application>
 

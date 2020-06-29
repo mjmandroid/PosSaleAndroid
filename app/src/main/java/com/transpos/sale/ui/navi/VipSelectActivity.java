@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.transpos.sale.R;
 import com.transpos.sale.base.BaseActivity;
+import com.transpos.sale.ui.scan.PromptScanCodeActivity;
 
 import butterknife.OnClick;
 
@@ -22,7 +23,7 @@ public class VipSelectActivity extends BaseActivity {
                 startActivity(VipLoginWaysActivity.class);
                 break;
             case R.id.btn_not_vip:
-
+                startActivity(PromptScanCodeActivity.class);
                 break;
         }
     }

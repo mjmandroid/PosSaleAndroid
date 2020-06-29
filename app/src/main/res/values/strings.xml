@@ -5,10 +5,11 @@
     <string name="txt_vip">会员</string>
     <string name="txt_not_vip">非会员</string>
     <string name="txt_actionbar_title">*免儿</string>
-    <string name="txt_actionbar_content">取消交易(%sS)</string>
+    <string name="txt_actionbar_content">取消交易(%s)</string>
     <string name="txt_set">设置</string>
     <string name="txt_quit">退出</string>
     <string name="txt_back_home">返回首页</string>
+    <string name="txt_back_login">返回登录</string>
     <string name="txt_authorize">授权</string>
     <string name="txt_account">账号</string>
     <string name="txt_password">密码</string>
@@ -20,4 +21,11 @@
     <string name="txt_select_login_way">请选择会员登录方式</string>
     <string name="txt_input_register_vip">请输入注册会员的</string>
     <string name="txt_11_phone">11位手机号</string>
+    <string name="txt_phone_num_error">*请输入正确的11位手机号</string>
+    <string name="txt_open_vip_code">请打开会员二维码</string>
+    <string name="txt_scan_code_login">扫码登录</string>
+    <string name="txt_look_camera">请抬头面向摄像头</string>
+    <string name="txt_face_login">刷脸登录</string>
+    <string name="txt_please_sacn">请扫条码</string>
+    <string name="txt_please_aim">将商品条码对准扫描口</string>
 </resources>

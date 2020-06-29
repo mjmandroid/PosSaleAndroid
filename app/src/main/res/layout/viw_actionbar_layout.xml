@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_15"
+        android:visibility="invisible"
         android:text="@string/txt_actionbar_title"/>
     <Space
         android:layout_width="0dp"
